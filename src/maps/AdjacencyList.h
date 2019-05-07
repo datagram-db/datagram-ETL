@@ -30,6 +30,13 @@
 
 #include <unordered_map>
 #include <vector>
+#include <cassert>
+
+#define VECTOR_OF_PAIRS \
+std::vector<std::pair<LONG_NUMERIC, LONG_NUMERIC>>
+
+#define ITERATOR_OF_PAIRS \
+VECTOR_OF_PAIRS::iterator
 
 /**
  * [edgeLabel].emplace_back(dst/src, edgeId)
@@ -40,7 +47,7 @@
  * (pair::second).
  */
 #define PRIMARY_MEMORY_ADJACENCY_LIST \
-std::unordered_map<LONG_NUMERIC, std::vector<std::pair<LONG_NUMERIC, LONG_NUMERIC>>>
+std::unordered_map<LONG_NUMERIC, VECTOR_OF_PAIRS>
 
 /**
  * Iterator over the adjacency list for a given vertex.
@@ -69,25 +76,33 @@ PRIMARY_MEMORY_ADJACENCY_MAP::iterator
  */
 class AdjacencyList {
     bool is_strategy_primary_memory;
+    bool thereIsNoElement;
     PRIMARY_MEMORY_ADJACENCY_MAP primary_memory_strategy;
+
+    struct primary_memory_find_iterator {
+        PRIMARY_MEMORY_ADJACENCY_LIST_ITERATOR it;
+        ITERATOR_OF_PAIRS begin, end;
+    };
+    struct primary_memory_find_iterator pm_beg, pm_end;
 
 public:
     AdjacencyList(bool isStrategyPrimaryMemory);
-    ~AdjacencyList() {
-        if (!is_strategy_primary_memory) {
-            // TODO
-        }
-    }
+    ~AdjacencyList();
+    void insert(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst, LONG_NUMERIC& edge_id);
 
-    void insert(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst, LONG_NUMERIC& edge_id) {
-        if (is_strategy_primary_memory) {
-            primary_memory_strategy[src][edge_hash].emplace_back(dst, edge_id);
-        } else {
-            // TODO:
-        }
-    }
+    /**
+     * Initializes the iteration over one vertex of the adjacency list
+     * @param vertex_id
+     */
+    void initIteration(LONG_NUMERIC& vertex_id);
 
+    /**
+     * Checks whether there is a new element to scan within the adjacency list of the current element
+     * @return
+     */
+    bool hasNext();
 
+    void get(LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst, LONG_NUMERIC& edge_id);
 };
 
 

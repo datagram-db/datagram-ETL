@@ -1,5 +1,5 @@
 /*
- * TransformationGraph.cpp
+ * VertexHash.h
  * This file is part of GatorLAND_ETL
  *
  * Copyright (C) 2019 - Giacomo Bergami
@@ -17,15 +17,27 @@
  * You should have received a copy of the GNU General Public License
  * along with GatorLAND_ETL. If not, see <http://www.gnu.org/licenses/>.
  */
-
- 
 //
 // Created by giacomo on 06/05/19.
 //
 
-#include "TransformationGraph.h"
+#ifndef ETL_VERTEXHASH_H
+#define ETL_VERTEXHASH_H
 
-TransformationGraph::TransformationGraph(bool primary_memory) :
-    in_edges{primary_memory}, out_edges{primary_memory} {
-    nextEdgeId = 0;
-}
+#include <unordered_map>
+#include "../etl.h"
+
+class VertexHash {
+    bool is_primary_memory;
+    std::unordered_map<LONG_NUMERIC, LONG_NUMERIC> primary_memory_map;
+
+public:
+    VertexHash(bool isPrimaryMemory);
+    void put(LONG_NUMERIC& vertexId, LONG_NUMERIC& hash);
+    LONG_NUMERIC operator[](const LONG_NUMERIC& vertexId);
+    void close();
+    ~VertexHash();
+};
+
+
+#endif //ETL_VERTEXHASH_H

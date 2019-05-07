@@ -27,18 +27,51 @@
 #define ETL_VERTEXSTACK_H
 
 #include "../etl.h"
+#include <algorithm>
+#include <vector>
+#include <cassert>
 
-#ifdef FUTURE_VERTEX_SET
-#else
-#include <stack>
-typedef     std::stack<LONG_NUMERIC>    vertex_set;
-#endif
+struct VertexStack {
+    std::vector<LONG_NUMERIC> primary_memory;
+    std::vector<LONG_NUMERIC>::iterator pm_begin, pm_end;
+    bool is_primary_memory;
+    LONG_NUMERIC size;
 
-class VertexStack {
-    vertex_set set;
+    /**
+     * Initializes a vertex stack, that is an ordering over the vertices
+     * As a rule of thumb, use isPrimaryMemory only up to 100M nodes.
+     *
+     * @param isPrimaryMemory
+     */
+    VertexStack(bool isPrimaryMemory);
 
-public:
-    // TODO:
+    /**
+     * Inserts a new vertex
+     * @param vertex_id
+     */
+    void put(LONG_NUMERIC& vertex_id);
+
+    /**
+     * Sorting the vertices by id
+     */
+    void sort();
+
+    /**
+     * Initializing the iteration over the sorted stack
+     */
+    void initIteration();
+
+    /**
+     * Checking whether we can continue the iteration
+     * @return  returns yes if we can continue to iterate, and false otherwise
+     */
+    bool hasNextVertex();
+
+    /**
+     * Returns the current element in the iteration, and evaluate the next step
+     * @return Current vertex
+     */
+    LONG_NUMERIC next();
 };
 
 

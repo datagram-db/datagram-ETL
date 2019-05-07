@@ -1,5 +1,5 @@
 /*
- * SortingStrategy.h
+ * AbstractSortingStrategy.cpp
  * This file is part of GatorLAND_ETL
  *
  * Copyright (C) 2019 - Giacomo Bergami
@@ -18,35 +18,25 @@
  * along with GatorLAND_ETL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+ 
 //
 // Created by giacomo on 06/05/19.
 //
 
-#ifndef ETL_SORTINGSTRATEGY_H
-#define ETL_SORTINGSTRATEGY_H
+#include "AbstractSortingStrategy.h"
 
-#include "../graphs/TransformationGraph.h"
+AbstractSortingStrategy::AbstractSortingStrategy(LoadingGraph &finalGraph)
+        : finalGraph(finalGraph) {}
 
-ABSTRACT_STRUCT SortingStrategy {
-    /**
-     * This will be the graph that will be sorted according to different sorting strategies.
-     */
-    TransformationGraph& graphToSort;
+void AbstractSortingStrategy::serialize_single_vertex(const LONG_NUMERIC &vertexId, const LONG_NUMERIC &vertexHash) {
+    ERvertex currentVertex{vertexId, vertexHash};
+    finalGraph.swc_init_structure(const_cast<LONG_NUMERIC &>(vertexId), const_cast<LONG_NUMERIC &>(vertexHash), currentVertex);
+    serializeIngoingEdges(vertexId, vertexHash, currentVertex);
+    serializeOutgoingEdges(vertexId, vertexHash, currentVertex);
+    finalGraph.swc_serialize_close(currentVertex);
+}
 
-    /**
-     * Associating the reference to the transformation graph representation
-     * @param graph
-     */
-    SortingStrategy(TransformationGraph& graph);
-
-    /**
-     * Each strategy will implement a different way to (eventually) sort the graph for the transformation phase
-     */
-    ABSTRACT void doSort() AS_ABSTRACT;
-
-    // TODO: strategy to return the elements to serialize
-
-};
-
-#endif //ETL_SORTINGSTRATEGY_H
+void AbstractSortingStrategy::loadGraph() {
+    doStrategySerialize();
+    finalGraph.close();
+}

@@ -46,6 +46,7 @@ class LoadingGraph {
 public:
     /**
      *
+     *
      * @param adj_list_file         File where to store the adjacency list, already sorted by the sorting approach
      * @param offset_map_strategy   Whether the offset_map strategy (that keeps in memory which vertex is serialized
      *                              where) has to be sorted in primary memory or in secondary memory
@@ -57,6 +58,7 @@ public:
         adjacency_list = fopen64(adjacency_list_file.c_str(), "w");
         offsetValues = 0;
     }
+
 
     void swc_init_structure(LONG_NUMERIC &vertex_id, LONG_NUMERIC &vertex_hash, ERvertex &tmp_structure) {
         offsetMap.put(vertex_id, offsetValues, vertex_hash);
@@ -80,19 +82,15 @@ public:
         offsetValues += serialize(&tmp_structure, adjacency_list);
     }
 
-    void close() {
-        if (adjacency_list) {
-            adjacency_list_file.clear();
-            fclose(adjacency_list);
-            adjacency_list = nullptr;
-        }
-        offsetMap.serialize();
-        offsetMap.close();
-    }
+    /**
+     * Closing the LoadingGraph, that performs the graph loading operation into secondary memory
+     */
+    void close();
 
-    ~LoadingGraph() {
-        close();
-    }
+    /**
+     * Implicitely closes the graph, if not already done
+     */
+    ~LoadingGraph();
 
 };
 

@@ -24,3 +24,17 @@
 //
 
 #include "LoadingGraph.h"
+
+void LoadingGraph::close() {
+    if (adjacency_list) {
+        adjacency_list_file.clear();
+        fclose(adjacency_list);
+        adjacency_list = nullptr;
+    }
+    offsetMap.serialize();
+    offsetMap.close();
+}
+
+LoadingGraph::~LoadingGraph() {
+    close();
+}

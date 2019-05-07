@@ -28,22 +28,30 @@
 
 
 #include "../maps/AdjacencyList.h"
+#include "../maps/VertexHash.h"
 
 /**
  * Representing a graph in the Transformation phase. That is, this graph is a decomposed serialization of different
  * parts, that will be then serialized into one unique data structure in a second step, that is after the loading phase
  */
-class TransformationGraph {
-    AdjacencyList in_edges, out_edges;
-    bool is_strategy_primary_memory;
-
+struct TransformationGraph {
+    // TODO: database connection to store eventually the properties associated to that, or to perform fast entrypoint
+    //       adjacency list resolution... ?
 
 public:
-    TransformationGraph(bool primary_memory);
+    AdjacencyList in_edges, out_edges;
+    LONG_NUMERIC nextEdgeId;
 
-    void insert(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst, LONG_NUMERIC& edge_id) {
-        out_edges.insert(src, edge_hash, dst, edge_id);
-        in_edges.insert(dst, edge_hash, src, edge_id);
+    TransformationGraph(bool adj_list_strategy);
+
+    void insertUniqueVertex(LONG_NUMERIC& id, LONG_NUMERIC& hash) {
+        //TODO
+    }
+
+    LONG_NUMERIC insertUniqueEdge(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst) {
+        out_edges.insert(src, edge_hash, dst, nextEdgeId);
+        in_edges.insert(dst, edge_hash, src, nextEdgeId);
+        return nextEdgeId++;
     }
 
 };
