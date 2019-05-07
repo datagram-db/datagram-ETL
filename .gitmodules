@@ -4,3 +4,9 @@
 [submodule "third_party/backward-cpp"]
 	path = third_party/backward-cpp
 	url = https://github.com/bombela/backward-cpp
+[submodule "third_party/rocksdb"]
+	path = third_party/rocksdb
+	url = https://github.com/facebook/rocksdb/
+[submodule "third_party/varsorter"]
+	path = third_party/varsorter
+	url = https://github.com/jackbergus/varsorter
