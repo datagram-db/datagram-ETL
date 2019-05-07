@@ -52,13 +52,9 @@ public:
      *                              where) has to be sorted in primary memory or in secondary memory
      * @param offset_map_file       File where to serialize the VertexOffset index.
      */
-    LoadingGraph(std::string adj_list_file, bool offset_map_strategy, std::string offset_map_file) :
-        adjacency_list_file{adj_list_file},
-        offsetMap{offset_map_strategy, offset_map_file} {
-        adjacency_list = fopen64(adjacency_list_file.c_str(), "w");
-        offsetValues = 0;
-    }
+    LoadingGraph(std::string adj_list_file, bool offset_map_strategy, std::string offset_map_file);
 
+    LoadingGraph();
 
     void swc_init_structure(LONG_NUMERIC &vertex_id, LONG_NUMERIC &vertex_hash, ERvertex &tmp_structure) {
         offsetMap.put(vertex_id, offsetValues, vertex_hash);

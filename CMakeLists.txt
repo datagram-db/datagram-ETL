@@ -3,6 +3,10 @@ project(ETL)
 
 set(CMAKE_CXX_STANDARD 17)
 
+include_directories("third_party/json/single_include")
+
+add_subdirectory(third_party/backward-cpp)
+
 add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
                             src/maps/AdjacencyList.h
                             src/maps/OffsetMap.h
@@ -49,4 +53,10 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
         test/test_idstrategy_class.cpp
         test/test_idstrategy_class.h
         test/test_hashstrategy_class.cpp
-        test/test_hashstrategy_class.h)
+        test/test_hashstrategy_class.h src/conf/ConfigurationFile.cpp src/conf/ConfigurationFile.h
+
+        ${BACKWARD_ENABLE} src/sorting/SortingStrategyFactory.cpp src/sorting/SortingStrategyFactory.h test/test_sorting_strategies.cpp test/test_sorting_strategies.h)
+
+# This will add libraries, definitions and include directories needed by backward
+# by setting each property on the target.
+add_backward(ETL)

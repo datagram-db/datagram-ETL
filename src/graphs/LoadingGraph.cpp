@@ -38,3 +38,17 @@ void LoadingGraph::close() {
 LoadingGraph::~LoadingGraph() {
     close();
 }
+
+LoadingGraph::LoadingGraph() : LoadingGraph(
+        ConfigurationFile::getInstance().load_adj_list_file,
+        ConfigurationFile::getInstance().load_offset_map_strategy,
+        ConfigurationFile::getInstance().load_vertex_offset_file) {
+
+}
+
+LoadingGraph::LoadingGraph(std::string adj_list_file, bool offset_map_strategy, std::string offset_map_file) :
+        adjacency_list_file{adj_list_file},
+        offsetMap{offset_map_strategy, offset_map_file} {
+    adjacency_list = fopen64(adjacency_list_file.c_str(), "w");
+    offsetValues = 0;
+}

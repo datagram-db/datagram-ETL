@@ -30,6 +30,8 @@
 typedef     uint_fast64_t                                       LONG_NUMERIC;
 
 #include <vector>
+#include "conf/ConfigurationFile.h"
+
 typedef     std::vector<LONG_NUMERIC>                           NUMERIC_VECTOR;
 typedef std::vector<std::pair<LONG_NUMERIC, LONG_NUMERIC>>      PAIR_NUMERIC_VECTOR;
 

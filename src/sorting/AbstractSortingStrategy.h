@@ -61,6 +61,27 @@ ABSTRACT_STRUCT AbstractSortingStrategy {
      */
     void loadGraph();
 
+
+    // TODO: add also the part where I load the properties to database
+    /**
+     * TODO: add also the part where I load the properties to database
+     *
+     * @param id
+     * @param hash
+     */
+    ABSTRACT void insertUniqueVertex(LONG_NUMERIC& id, LONG_NUMERIC& hash) AS_ABSTRACT;
+
+    // TODO: add also the part where I load the properties to database
+    /**
+     * TODO: add also the part where I load the properties to database
+     *
+     * @param src
+     * @param edge_hash
+     * @param dst
+     * @return
+     */
+    ABSTRACT LONG_NUMERIC insertUniqueEdge(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst) AS_ABSTRACT;
+
 protected:
     /**
      * For each possible vertex, it calls the serialize_single_vertex function. Called by doSerialize
@@ -93,25 +114,6 @@ protected:
      */
     ABSTRACT void serializeOutgoingEdges(const LONG_NUMERIC& vertexId, const LONG_NUMERIC& vertexHash, ERvertex& v) AS_ABSTRACT;
 
-    // TODO: add also the part where I load the properties to database
-    /**
-     * TODO: add also the part where I load the properties to database
-     *
-     * @param id
-     * @param hash
-     */
-    ABSTRACT void insertUniqueVertex(LONG_NUMERIC& id, LONG_NUMERIC& hash) AS_ABSTRACT;
-
-    // TODO: add also the part where I load the properties to database
-    /**
-     * TODO: add also the part where I load the properties to database
-     *
-     * @param src
-     * @param edge_hash
-     * @param dst
-     * @return
-     */
-    ABSTRACT LONG_NUMERIC insertUniqueEdge(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst) AS_ABSTRACT;
 };
 
 #endif //ETL_ABSTRACTSORTINGSTRATEGY_H

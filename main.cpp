@@ -20,10 +20,12 @@
 
  
 #include <iostream>
-#include "test/test_hashstrategy_class.h"
+#include "test/test_idstrategy_class.h"
+#include "src/conf/ConfigurationFile.h"
 
 int main() {
-    test_hashstrategy_class();
+    //ConfigurationFile &conf = ConfigurationFile::getInstance();
+    test_idstrategy_class();
     std::cout << "Hello, World!" << std::endl;
     return 0;
 }

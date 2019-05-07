@@ -31,8 +31,14 @@
  * Implementing the strategy that serializes the graph in secondary memory according to the id order of the nodes.
  */
 struct HashStrategy : public AbstractSortingStrategy {
-    bool is_primary_memory;
+    /**
+     * Graph containing the final representation of the overall dataset
+     */
     TransformationGraph graph;
+
+    /**
+     * This index associates to each vertex hash an unique value that has it.
+     */
     NestingIndex vertex_set;
 
     HashStrategy(LoadingGraph &finalGraph, bool adj_list_strategy, bool vertex_hash_strategy, bool vset_primary_memory);
