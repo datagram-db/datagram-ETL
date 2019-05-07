@@ -1,5 +1,5 @@
 /*
- * TransformationGraph.cpp
+ * mmapFile.h
  * This file is part of GatorLAND_ETL
  *
  * Copyright (C) 2019 - Giacomo Bergami
@@ -18,14 +18,24 @@
  * along with GatorLAND_ETL. If not, see <http://www.gnu.org/licenses/>.
  */
 
- 
+
 //
-// Created by giacomo on 06/05/19.
+// Created by giacomo on 04/08/17.
 //
 
-#include "TransformationGraph.h"
+#ifndef PROJECT_MMAPFILE_H
+#define PROJECT_MMAPFILE_H
 
-TransformationGraph::TransformationGraph(bool primary_memory, bool vertex_hash_strategy) :
-    in_edges{primary_memory}, out_edges{primary_memory}, vertexHash{vertex_hash_strategy} {
-    nextEdgeId = 0;
+#include <string>
+#include <fstream>
+
+extern "C" {
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 }
+
+void* mmapFile(std::string file, unsigned long* size, int* fd);
+
+#endif //PROJECT_MMAPFILE_H

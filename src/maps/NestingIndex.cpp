@@ -74,7 +74,9 @@ LONG_NUMERIC NestingIndex::getCurrentKey() {
 
 bool NestingIndex::hasCurrentKeyContent() {
     if (isPrimaryMemory) {
-        return (internalBeg != internalEnd);
+        bool toret =  (internalBeg != internalEnd);
+        if (!toret) beg++;
+        return toret;
     } else {
         assert(false);
     }

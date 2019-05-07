@@ -1,5 +1,5 @@
 /*
- * TransformationGraph.cpp
+ * test_hashstrategy_class.h
  * This file is part of GatorLAND_ETL
  *
  * Copyright (C) 2019 - Giacomo Bergami
@@ -18,14 +18,14 @@
  * along with GatorLAND_ETL. If not, see <http://www.gnu.org/licenses/>.
  */
 
- 
+
 //
-// Created by giacomo on 06/05/19.
+// Created by giacomo on 07/05/19.
 //
 
-#include "TransformationGraph.h"
+#ifndef ETL_TEST_HASHSTRATEGY_CLASS_H
+#define ETL_TEST_HASHSTRATEGY_CLASS_H
 
-TransformationGraph::TransformationGraph(bool primary_memory, bool vertex_hash_strategy) :
-    in_edges{primary_memory}, out_edges{primary_memory}, vertexHash{vertex_hash_strategy} {
-    nextEdgeId = 0;
-}
+void test_hashstrategy_class();
+
+#endif //ETL_TEST_HASHSTRATEGY_CLASS_H

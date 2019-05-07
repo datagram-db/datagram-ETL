@@ -9,6 +9,8 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
                             src/maps/OffsetMap.cpp
                             src/maps/VertexHash.cpp
                             src/maps/VertexHash.h
+                            src/maps/NestingIndex.cpp
+                            src/maps/NestingIndex.h
 
         src/sets/VertexStack.h
         src/sets/VertexStack.cpp
@@ -41,4 +43,10 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
 
         src/utils/old_code/Serialize.cpp
         src/utils/old_code/Serialize.h
-        src/maps/NestingIndex.cpp src/maps/NestingIndex.h)
+        src/utils/old_code/mmapFile.cpp
+        src/utils/old_code/mmapFile.h
+
+        test/test_idstrategy_class.cpp
+        test/test_idstrategy_class.h
+        test/test_hashstrategy_class.cpp
+        test/test_hashstrategy_class.h)

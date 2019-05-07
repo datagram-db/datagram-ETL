@@ -37,6 +37,7 @@ void AbstractSortingStrategy::serialize_single_vertex(const LONG_NUMERIC &vertex
 }
 
 void AbstractSortingStrategy::loadGraph() {
+    doSort();
     doStrategySerialize();
     finalGraph.close();
 }

@@ -24,7 +24,7 @@
 #include "IdStrategy.h"
 
 IdStrategy::IdStrategy(LoadingGraph &finalGraph, bool adj_list_strategy, bool vertex_hash_strategy, bool vset_primary_memory)
-        : AbstractSortingStrategy(finalGraph), graph(adj_list_strategy), vertexHash{vertex_hash_strategy},
+        : AbstractSortingStrategy(finalGraph), graph(adj_list_strategy, vertex_hash_strategy),
            vertex_set{vset_primary_memory} {}
 
 void IdStrategy::doSort() {
@@ -35,7 +35,7 @@ void IdStrategy::doStrategySerialize() {
     vertex_set.initIteration();
     while (vertex_set.hasNextVertex()) {
         const LONG_NUMERIC& vertex_id = vertex_set.next();
-        const LONG_NUMERIC& hash = vertexHash[vertex_id];
+        const LONG_NUMERIC& hash = graph.vertexHash[vertex_id];
         serialize_single_vertex(const_cast<LONG_NUMERIC &>(vertex_id), const_cast<LONG_NUMERIC &>(hash));
     }
 }
@@ -45,7 +45,7 @@ void IdStrategy::serializeIngoingEdges(const LONG_NUMERIC &vertexId, const LONG_
     LONG_NUMERIC edge_hash, edge_id, dst_id, dst_hash;
     while (graph.in_edges.hasNext()) {
         graph.in_edges.get(edge_hash, dst_id, edge_id);
-        dst_hash = this->vertexHash[dst_id];
+        dst_hash = graph.vertexHash[dst_id];
         finalGraph.swc_add_sorted_ingoing(edge_id, edge_hash, dst_id, dst_hash, v);
     }
 }
@@ -53,15 +53,16 @@ void IdStrategy::serializeIngoingEdges(const LONG_NUMERIC &vertexId, const LONG_
 void IdStrategy::serializeOutgoingEdges(const LONG_NUMERIC &vertexId, const LONG_NUMERIC &vertexHash, ERvertex& v) {
     graph.out_edges.initIteration(const_cast<LONG_NUMERIC &>(vertexId));
     LONG_NUMERIC edge_hash, edge_id, dst_id, dst_hash;
-    while (graph.in_edges.hasNext()) {
-        graph.in_edges.get(edge_hash, dst_id, edge_id);
-        dst_hash = this->vertexHash[dst_id];
-        finalGraph.swc_add_sorted_ingoing(edge_id, edge_hash, dst_id, dst_hash, v);
+    while (graph.out_edges.hasNext()) {
+        graph.out_edges.get(edge_hash, dst_id, edge_id);
+        dst_hash = graph.vertexHash[dst_id];
+        finalGraph.swc_add_sorted_outgoing(edge_id, edge_hash, dst_id, dst_hash, v);
     }
 }
 
 void IdStrategy::insertUniqueVertex(LONG_NUMERIC &id, LONG_NUMERIC &hash) {
     graph.insertUniqueVertex(id, hash);
+    vertex_set.put(id);
 }
 
 LONG_NUMERIC IdStrategy::insertUniqueEdge(LONG_NUMERIC &src, LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst) {

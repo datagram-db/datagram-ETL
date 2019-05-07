@@ -74,8 +74,16 @@ bool AdjacencyList::hasNext() {
         while (pm_beg.it != pm_end.it) {
             if (pm_beg.begin == pm_beg.end) {
                 pm_beg.it++;
-                pm_beg.begin = pm_beg.it->second.begin();
-                pm_beg.end = pm_beg.it->second.end();
+                if ((pm_beg.it != pm_end.it)) {
+                    pm_beg.begin = pm_beg.it->second.begin();
+                    pm_beg.end = pm_beg.it->second.end();
+                } else {
+                    thereIsNoElement = true;
+                    return false;
+                }
+            } else {
+                thereIsNoElement = false;
+                return true;
             }
         }
         thereIsNoElement = true;
@@ -92,7 +100,7 @@ void AdjacencyList::get(LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst, LONG_NUMERIC
         edge_hash = pm_beg.it->first;
         dst = pm_beg.begin->first;
         edge_id = pm_beg.begin->second;
-        pm_beg.it++;
+        pm_beg.begin++;
     } else {
         // TODO: implement strategy
         assert(false);

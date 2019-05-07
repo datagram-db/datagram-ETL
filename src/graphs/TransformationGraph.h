@@ -41,11 +41,12 @@ struct TransformationGraph {
 public:
     AdjacencyList in_edges, out_edges;
     LONG_NUMERIC nextEdgeId;
+    VertexHash vertexHash;
 
-    TransformationGraph(bool adj_list_strategy);
+    TransformationGraph(bool adj_list_strategy, bool vertex_hash_strategy);
 
     void insertUniqueVertex(LONG_NUMERIC& id, LONG_NUMERIC& hash) {
-        //TODO
+        vertexHash.put(id, hash);
     }
 
     LONG_NUMERIC insertUniqueEdge(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst) {

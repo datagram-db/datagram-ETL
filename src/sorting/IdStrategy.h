@@ -33,10 +33,13 @@
 struct IdStrategy : public AbstractSortingStrategy {
     bool is_primary_memory;
     TransformationGraph graph;
-    VertexHash vertexHash;
     VertexStack vertex_set;
 
+public:
     IdStrategy(LoadingGraph &finalGraph, bool adj_list_strategy, bool vertex_hash_strategy, bool vset_primary_memory);
+    // TODO: add properties
+    void insertUniqueVertex(LONG_NUMERIC &id, LONG_NUMERIC &hash) override;
+    LONG_NUMERIC insertUniqueEdge(LONG_NUMERIC &src, LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst) override;
 
 protected:
     void doSort() override;
@@ -44,9 +47,6 @@ protected:
     void serializeIngoingEdges(const LONG_NUMERIC &vertexId, const LONG_NUMERIC &vertexHash, ERvertex& v) override;
     void serializeOutgoingEdges(const LONG_NUMERIC &vertexId, const LONG_NUMERIC &vertexHash, ERvertex& v) override;
 
-    // TODO: add properties
-    void insertUniqueVertex(LONG_NUMERIC &id, LONG_NUMERIC &hash) override;
-    LONG_NUMERIC insertUniqueEdge(LONG_NUMERIC &src, LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst) override;
 };
 
 
