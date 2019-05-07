@@ -1,11 +1,32 @@
 cmake_minimum_required(VERSION 3.10)
 project(ETL)
-
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories("third_party/json/single_include")
-
 add_subdirectory(third_party/backward-cpp)
+add_subdirectory(third_party/varsorter)
+
+#[[set(PTHREAD_LIB pthread)
+set(LIBM m)
+set(LIBZ z)
+set(LIBZ4 lz4)
+set(LIBZSTD zstd)
+set(LIBDL dl)
+set(LIBSNAPPY snappy)
+set(LIBBZ2 bz2)
+set(LIBFDB forestdb)
+set(LIBLDB leveldb)
+set(LIBRDB rocksdb)
+set(LIBCOUCH couchstore)
+set(LIBWT wiredtiger)
+set(LIBTCM tcmalloc)
+find_package(snappy)
+include_directories(${SNAPPY_INCLUDE_DIR})
+find_package(LZ4)
+include_directories(${LZ4_INCLUDE_DIR})
+find_package(RocksDB)
+LINK_DIRECTORIES(${LZ4_LIBRARY})]]
 
 add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
                             src/maps/AdjacencyList.h
@@ -30,6 +51,8 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
         src/sorting/IdStrategy.h
         src/sorting/HashStrategy.cpp
         src/sorting/HashStrategy.h
+        src/sorting/SortingStrategyFactory.cpp
+        src/sorting/SortingStrategyFactory.h
 
         src/graphs/utils/primary_memory/element.cpp
         src/graphs/utils/primary_memory/element.h
@@ -53,9 +76,16 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
         test/test_idstrategy_class.cpp
         test/test_idstrategy_class.h
         test/test_hashstrategy_class.cpp
-        test/test_hashstrategy_class.h src/conf/ConfigurationFile.cpp src/conf/ConfigurationFile.h
+        test/test_hashstrategy_class.h
+        test/test_sorting_strategies.cpp
+        test/test_sorting_strategies.h
 
-        ${BACKWARD_ENABLE} src/sorting/SortingStrategyFactory.cpp src/sorting/SortingStrategyFactory.h test/test_sorting_strategies.cpp test/test_sorting_strategies.h)
+        src/conf/ConfigurationFile.cpp
+        src/conf/ConfigurationFile.h
+
+        ${BACKWARD_ENABLE}    )
+
+link_libraries(ETL libvarsorter)
 
 # This will add libraries, definitions and include directories needed by backward
 # by setting each property on the target.
