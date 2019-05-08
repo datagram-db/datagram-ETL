@@ -65,6 +65,8 @@ ConfigurationFile::ConfigurationFile() {
         getString(end, "load_vertex_offset_file", this->load_vertex_offset_file);
 
         getUnsigned(end, "big_number_sort_limit", this->big_number_sort_limit);
+        getUnsigned(end, "vertex_hash_sm_no_block_cache", this->vertex_hash_sm_no_block_cache);
+        getUnsigned(end, "vertex_hash_sm_no_leaf_block_cache", this->vertex_hash_sm_no_leaf_block_cache);
     } else {
         std::cerr << "Error: the ETL requires a `etl_conf.json` for configurating the ETL loader for GatorLAND. Please create an empty file" << std::endl;
         exit(1);

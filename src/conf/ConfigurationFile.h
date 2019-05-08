@@ -30,7 +30,7 @@ public:
 
     bool adj_list_strategy, vertex_hash_strategy, vset_primary_memory, load_offset_map_strategy;
     std::string sorting_strategy, load_adj_list_file, load_vertex_offset_file;
-    LONG_NUMERIC big_number_sort_limit;
+    LONG_NUMERIC big_number_sort_limit, vertex_hash_sm_no_block_cache, vertex_hash_sm_no_leaf_block_cache;
 };
 
 

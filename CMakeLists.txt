@@ -87,7 +87,7 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
         src/conf/ConfigurationFile.cpp
         src/conf/ConfigurationFile.h
 
-        ${BACKWARD_ENABLE}    )
+        ${BACKWARD_ENABLE})
 
 # This will add libraries, definitions and include directories needed by backward
 # by setting each property on the target.

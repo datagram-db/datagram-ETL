@@ -24,13 +24,21 @@
 
 #include "VertexHash.h"
 
-VertexHash::VertexHash(bool isPrimaryMemory) : is_primary_memory(isPrimaryMemory) {}
+VertexHash::VertexHash(bool isPrimaryMemory) :
+        is_primary_memory(isPrimaryMemory),
+        secondary_memory_map{
+            ConfigurationFile::getInstance().vertex_hash_sm_no_block_cache,
+            ConfigurationFile::getInstance().vertex_hash_sm_no_leaf_block_cache
+        }
+{
+
+}
 
 void VertexHash::put(LONG_NUMERIC &vertexId, LONG_NUMERIC &hash) {
     if (is_primary_memory) {
         primary_memory_map.emplace(vertexId, hash);
     } else {
-        // TODO: secondary memory representation
+        secondary_memory_map.insert(std::pair<LONG_NUMERIC, LONG_NUMERIC>(vertexId, hash));
     }
 }
 
@@ -38,16 +46,6 @@ LONG_NUMERIC VertexHash::operator[](const LONG_NUMERIC &vertexId) {
     if (is_primary_memory) {
         return primary_memory_map[vertexId];
     } else {
-        // TODO: accessing secondary memory
+        return secondary_memory_map[vertexId];
     }
-}
-
-void VertexHash::close() {
-    if (!is_primary_memory) {
-        // TODO: secondary memory map to clear
-    }
-}
-
-VertexHash::~VertexHash() {
-    close();
 }
