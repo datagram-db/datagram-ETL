@@ -2,10 +2,15 @@ cmake_minimum_required(VERSION 3.10)
 project(ETL)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 include_directories("third_party/json/single_include")
 add_subdirectory(third_party/backward-cpp)
 add_subdirectory(third_party/varsorter)
+
+add_subdirectory(third_party/stxxl)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${STXXL_CXX_FLAGS}")
+include_directories(${STXXL_INCLUDE_DIRS})
 
 #[[set(PTHREAD_LIB pthread)
 set(LIBM m)
@@ -60,7 +65,6 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
         src/graphs/utils/primary_memory/value.h
         src/graphs/utils/primary_memory/ERVertex.cpp
         src/graphs/utils/primary_memory/ERVertex.h
-
         src/graphs/utils/secondary_memory/vertex_id_index.cpp
         src/graphs/utils/secondary_memory/vertex_id_index.h
         src/graphs/utils/secondary_memory/hashIndex.cpp
@@ -85,8 +89,8 @@ add_executable(ETL main.cpp src/maps/AdjacencyList.cpp
 
         ${BACKWARD_ENABLE}    )
 
-link_libraries(ETL libvarsorter)
-
 # This will add libraries, definitions and include directories needed by backward
 # by setting each property on the target.
 add_backward(ETL)
+target_link_libraries(ETL libvarsorter  stxxl)
+

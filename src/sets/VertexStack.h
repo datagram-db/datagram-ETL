@@ -31,10 +31,17 @@
 #include <vector>
 #include <cassert>
 
+#include <stxxl.h>
+
 struct VertexStack {
+    stxxl::vector<LONG_NUMERIC> secondary_memory;
+    stxxl::vector<LONG_NUMERIC>::iterator sm_begin, sm_end;
+
     std::vector<LONG_NUMERIC> primary_memory;
     std::vector<LONG_NUMERIC>::iterator pm_begin, pm_end;
     bool is_primary_memory;
+    LONG_NUMERIC secondary_memory_limit;
+
     LONG_NUMERIC size;
 
     /**
@@ -43,7 +50,7 @@ struct VertexStack {
      *
      * @param isPrimaryMemory
      */
-    VertexStack(bool isPrimaryMemory);
+    VertexStack(bool isPrimaryMemory, LONG_NUMERIC secondaryMemoryLimit);
 
     /**
      * Inserts a new vertex

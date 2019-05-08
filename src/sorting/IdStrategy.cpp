@@ -23,9 +23,9 @@
 
 #include "IdStrategy.h"
 
-IdStrategy::IdStrategy(LoadingGraph &finalGraph, bool adj_list_strategy, bool vertex_hash_strategy, bool vset_primary_memory)
+IdStrategy::IdStrategy(LoadingGraph &finalGraph, bool adj_list_strategy, bool vertex_hash_strategy, bool vset_primary_memory, LONG_NUMERIC vset_max_primary)
         : AbstractSortingStrategy(finalGraph), graph(adj_list_strategy, vertex_hash_strategy),
-           vertex_set{vset_primary_memory} {}
+          vertex_set{vset_primary_memory, vset_max_primary} {}
 
 void IdStrategy::doSort() {
     vertex_set.sort();

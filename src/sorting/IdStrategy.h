@@ -36,7 +36,7 @@ struct IdStrategy : public AbstractSortingStrategy {
     VertexStack vertex_set;
 
 public:
-    IdStrategy(LoadingGraph &finalGraph, bool adj_list_strategy, bool vertex_hash_strategy, bool vset_primary_memory);
+    IdStrategy(LoadingGraph &finalGraph, bool adj_list_strategy, bool vertex_hash_strategy, bool vset_primary_memory, LONG_NUMERIC vset_max_primary);
     // TODO: add properties
     void insertUniqueVertex(LONG_NUMERIC &id, LONG_NUMERIC &hash) override;
     LONG_NUMERIC insertUniqueEdge(LONG_NUMERIC &src, LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst) override;

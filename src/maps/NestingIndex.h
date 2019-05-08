@@ -38,6 +38,7 @@ class NestingIndex {
     std::map<LONG_NUMERIC, std::vector<LONG_NUMERIC >> primary_memory;
     std::map<LONG_NUMERIC, std::vector<LONG_NUMERIC >>::iterator beg, end;
     std::vector<LONG_NUMERIC>::iterator internalBeg, internalEnd;
+
     bool isPrimaryMemory;
 
 public:

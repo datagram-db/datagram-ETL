@@ -10,3 +10,6 @@
 [submodule "third_party/varsorter"]
 	path = third_party/varsorter
 	url = https://github.com/jackbergus/varsorter
+[submodule "third_party/stxxl"]
+	path = third_party/stxxl
+	url = https://github.com/stxxl/stxxl

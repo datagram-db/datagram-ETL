@@ -12,25 +12,20 @@
 #include "HashStrategy.h"
 
 struct SortingStrategyFactory {
-    static AbstractSortingStrategy* getStrategy(std::string strategyName, LoadingGraph& lg) {
-        ConfigurationFile& conf = ConfigurationFile::getInstance();
-        if (strategyName == "hashing") {
-            return new HashStrategy(lg, conf.adj_list_strategy, conf.vertex_hash_strategy, conf.vset_primary_memory);
-        } else {
-            if (!(strategyName == "id"))
-                std::cerr << "Sorting strategy `" << strategyName << "` not recognized: using `id` instead" << std::endl;
-            return new IdStrategy(lg, conf.adj_list_strategy, conf.vertex_hash_strategy, conf.vset_primary_memory);
-        }
-    }
-
     /**
-     * Uses the configuration file
+     * Creates the predefinite strategy with @strategyName, and initialises the remaining arguments using the default configuration file
+     * @param strategyName
      * @param lg
      * @return
      */
-    static AbstractSortingStrategy* getStrategy(LoadingGraph& lg) {
-        return getStrategy(ConfigurationFile::getInstance().sorting_strategy, lg);
-    }
+    static AbstractSortingStrategy* getStrategy(std::string strategyName, LoadingGraph& lg);
+
+    /**
+     * Uses the configuration file to get the preferred strategy
+     * @param lg
+     * @return
+     */
+    static AbstractSortingStrategy* getStrategy(LoadingGraph& lg);
 
 };
 

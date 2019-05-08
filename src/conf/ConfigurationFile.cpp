@@ -38,6 +38,17 @@ std::cout << strarg << ": `" << final << "`" << std::endl;\
 }\
 } while(0)
 
+#define getUnsigned(end, strarg, final) do {\
+nlohmann::json::iterator x = j.find(strarg);\
+if ((x != end) && (x.value().is_number_unsigned())) {\
+(final) = x.value();\
+std::cout << strarg << ": `" << final << "`" << std::endl;\
+} else {\
+    (final) = 0L;\
+    std::cout << strarg << " (missing): `" << final << "`" << std::endl ;\
+}\
+} while(0)
+
 ConfigurationFile::ConfigurationFile() {
     std::ifstream infile("etl_conf.json");
     if (infile.good()) {
@@ -52,6 +63,8 @@ ConfigurationFile::ConfigurationFile() {
         getString(end, "sort_strategy", this->sorting_strategy);
         getString(end, "load_adj_list_file", this->load_adj_list_file);
         getString(end, "load_vertex_offset_file", this->load_vertex_offset_file);
+
+        getUnsigned(end, "big_number_sort_limit", this->big_number_sort_limit);
     } else {
         std::cerr << "Error: the ETL requires a `etl_conf.json` for configurating the ETL loader for GatorLAND. Please create an empty file" << std::endl;
         exit(1);

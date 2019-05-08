@@ -9,7 +9,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iostream>
-
+#include "../etl.h"
 
 
 class ConfigurationFile
@@ -30,6 +30,7 @@ public:
 
     bool adj_list_strategy, vertex_hash_strategy, vset_primary_memory, load_offset_map_strategy;
     std::string sorting_strategy, load_adj_list_file, load_vertex_offset_file;
+    LONG_NUMERIC big_number_sort_limit;
 };
 
 

@@ -41,6 +41,7 @@
 class OffsetMap {
     // id -> {hash, offset}
     std::map<LONG_NUMERIC, std::pair<LONG_NUMERIC,LONG_NUMERIC>> primary_memory_map;
+
     std::string vertex_id_file;
     FILE* vertex_id_index;
     bool isFinished;
