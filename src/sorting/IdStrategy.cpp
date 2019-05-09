@@ -35,7 +35,7 @@ void IdStrategy::doStrategySerialize() {
     vertex_set.initIteration();
     while (vertex_set.hasNextVertex()) {
         const LONG_NUMERIC& vertex_id = vertex_set.next();
-        const LONG_NUMERIC& hash = graph.vertexHash[vertex_id];
+        const LONG_NUMERIC& hash = graph.getSingleVertexHash(vertex_id);
         serialize_single_vertex(const_cast<LONG_NUMERIC &>(vertex_id), const_cast<LONG_NUMERIC &>(hash));
     }
 }

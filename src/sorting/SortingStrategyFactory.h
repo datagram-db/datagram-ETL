@@ -5,6 +5,7 @@
 #ifndef ETL_SORTINGSTRATEGYFACTORY_H
 #define ETL_SORTINGSTRATEGYFACTORY_H
 
+
 #include <string>
 #include <unordered_map>
 #include "AbstractSortingStrategy.h"

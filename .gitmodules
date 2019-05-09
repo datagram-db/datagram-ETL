@@ -13,3 +13,6 @@
 [submodule "third_party/stxxl"]
 	path = third_party/stxxl
 	url = https://github.com/stxxl/stxxl
+[submodule "third_party/FHoSP"]
+	path = third_party/FHoSP
+	url = https://github.com/jackbergus/FHoSP

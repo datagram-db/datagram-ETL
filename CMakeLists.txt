@@ -2,11 +2,12 @@ cmake_minimum_required(VERSION 3.10)
 project(ETL)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+#set(CMAKE_VERBOSE_MAKEFILE ON)
 
 include_directories("third_party/json/single_include")
 add_subdirectory(third_party/backward-cpp)
 add_subdirectory(third_party/varsorter)
+add_subdirectory(third_party/FHoSP)
 
 add_subdirectory(third_party/stxxl)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${STXXL_CXX_FLAGS}")

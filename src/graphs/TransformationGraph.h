@@ -37,13 +37,18 @@
 struct TransformationGraph {
     // TODO: database connection to store eventually the properties associated to that, or to perform fast entrypoint
     //       adjacency list resolution... ?
+    VertexHash vertexHash;
 
 public:
     AdjacencyList in_edges, out_edges;
     LONG_NUMERIC nextEdgeId;
-    VertexHash vertexHash;
 
     TransformationGraph(bool adj_list_strategy, bool vertex_hash_strategy);
+
+    LONG_NUMERIC getSingleVertexHash(const LONG_NUMERIC& id) {
+        LONG_NUMERIC k = id;
+        return vertexHash[k];
+    }
 
     void insertUniqueVertex(LONG_NUMERIC& id, LONG_NUMERIC& hash) {
         vertexHash.put(id, hash);

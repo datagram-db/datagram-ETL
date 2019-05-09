@@ -33,6 +33,8 @@
 
 OffsetMap::OffsetMap(bool isStrategyPrimaryMemory, std::string vertexIdFile)
         : is_strategy_primary_memory(isStrategyPrimaryMemory), isFinished{false}, vertex_id_file(vertexIdFile) {
+    // I need to open the file only once
+    if (isStrategyPrimaryMemory)
     vertex_id_index = fopen64(vertex_id_file.c_str(), "w");
 }
 
@@ -51,7 +53,7 @@ void OffsetMap::put(LONG_NUMERIC &id, LONG_NUMERIC &offset, LONG_NUMERIC &vertex
     if (is_strategy_primary_memory) {
         primary_memory_map.emplace(id, std::make_pair(vertex_hash, offset));
     } else {
-        ACTUAL_SERIALIZE(id, offset, vertex_hash);
+        //ACTUAL_SERIALIZE(id, offset, vertex_hash);
     }
 }
 

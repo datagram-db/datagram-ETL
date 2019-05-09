@@ -23,6 +23,10 @@
 // Created by giacomo on 06/05/19.
 //
 
+#ifdef  _GLIBCXX_PARALLEL
+#undef  _GLIBCXX_PARALLEL
+#endif
+
 #ifndef ETL_ETL_H
 #define ETL_ETL_H
 

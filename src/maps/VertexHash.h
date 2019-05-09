@@ -24,27 +24,30 @@
 #ifndef ETL_VERTEXHASH_H
 #define ETL_VERTEXHASH_H
 
-#include <stxxl.h>
+//#include <stxxl.h>
 #include "../etl.h"
+#include "../../third_party/varsorter/src/KeyValueStore.h"
+#include "../../third_party/varsorter/external_merge_sort/ExternalULongKeyComparator.h"
 
-struct VertexHashComparator
+/*struct VertexHashComparator
 {
     bool operator () (const LONG_NUMERIC & a, const LONG_NUMERIC & b) const
     { return a > b; }
     static int max_value()
     { return std::numeric_limits<LONG_NUMERIC>::max(); }
-};
+};*/
 
 
 class VertexHash {
     bool is_primary_memory;
     std::unordered_map<LONG_NUMERIC, LONG_NUMERIC> primary_memory_map;
-    stxxl::map<LONG_NUMERIC, LONG_NUMERIC, VertexHashComparator, 4096, 4096> secondary_memory_map;
+    KeyValueStore<ExternalULongKeyComparator> secondary_memory_map{sizeof(LONG_NUMERIC)*2};
+    //stxxl::map<LONG_NUMERIC, LONG_NUMERIC, VertexHashComparator, 4096, 4096> secondary_memory_map;
 
 public:
     VertexHash(bool isPrimaryMemory);
     void put(LONG_NUMERIC& vertexId, LONG_NUMERIC& hash);
-    LONG_NUMERIC operator[](const LONG_NUMERIC& vertexId);
+    LONG_NUMERIC operator[](LONG_NUMERIC& vertexId);
 };
 
 
