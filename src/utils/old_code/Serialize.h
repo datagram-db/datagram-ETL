@@ -27,7 +27,7 @@
 #define JINGOLOBA_SERIALIZE_H
 
 #include "../../etl.h"
-#include "../../graphs/utils/primary_memory/ERVertex.h"
+#include <serializers/commons/primary_memory/entity_relationship.h>
 
 
 

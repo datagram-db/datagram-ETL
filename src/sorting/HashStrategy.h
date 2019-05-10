@@ -29,6 +29,8 @@
 
 /**
  * Implementing the strategy that serializes the graph in secondary memory according to the id order of the nodes.
+ *
+ * @Deprecated: for testing purposes only.
  */
 struct HashStrategy : public AbstractSortingStrategy {
     /**

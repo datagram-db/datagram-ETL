@@ -27,7 +27,7 @@
 #define ETL_TRANSFORMATIONGRAPH_H
 
 
-#include "../maps/AdjacencyList.h"
+#include "../maps/TransformationGraphAdjacencyList.h"
 #include "../maps/VertexHash.h"
 
 /**
@@ -40,7 +40,7 @@ struct TransformationGraph {
     VertexHash vertexHash;
 
 public:
-    AdjacencyList in_edges, out_edges;
+    TransformationGraphAdjacencyList in_edges, out_edges;
     LONG_NUMERIC nextEdgeId;
 
     TransformationGraph(bool adj_list_strategy, bool vertex_hash_strategy);

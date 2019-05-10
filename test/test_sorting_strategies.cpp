@@ -5,7 +5,7 @@
 #include "test_sorting_strategies.h"
 #include "../src/sorting/SortingStrategyFactory.h"
 #include "../src/etl.h"
-#include "../src/graphs/utils/secondary_memory/header.h"
+#include <serializers/commons/secondary_memory/header.h>
 #include "../src/utils/old_code/mmapFile.h"
 
 void test_sorting_strategies(std::string name) {

@@ -23,8 +23,8 @@
 // Created by giacomo on 06/05/19.
 //
 
-#ifndef ETL_ADJACENCYLIST_H
-#define ETL_ADJACENCYLIST_H
+#ifndef ETL_TRANSFORMATIONGRAPHADJACENCYLIST_H
+#define ETL_TRANSFORMATIONGRAPHADJACENCYLIST_H
 
 #include "../etl.h"
 
@@ -74,7 +74,7 @@ PRIMARY_MEMORY_ADJACENCY_MAP::iterator
 /**
  * This class represents both the ingoing and the outgoing edges
  */
-class AdjacencyList {
+class TransformationGraphAdjacencyList {
     bool is_strategy_primary_memory;
     bool thereIsNoElement;
     PRIMARY_MEMORY_ADJACENCY_MAP primary_memory_strategy;
@@ -86,8 +86,8 @@ class AdjacencyList {
     struct primary_memory_find_iterator pm_beg, pm_end;
 
 public:
-    AdjacencyList(bool isStrategyPrimaryMemory);
-    ~AdjacencyList();
+    TransformationGraphAdjacencyList(bool isStrategyPrimaryMemory);
+    ~TransformationGraphAdjacencyList();
     void insert(LONG_NUMERIC& src, LONG_NUMERIC& edge_hash, LONG_NUMERIC& dst, LONG_NUMERIC& edge_id);
 
     /**
@@ -106,4 +106,4 @@ public:
 };
 
 
-#endif //ETL_ADJACENCYLIST_H
+#endif //ETL_TRANSFORMATIONGRAPHADJACENCYLIST_H

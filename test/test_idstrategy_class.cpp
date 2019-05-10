@@ -26,7 +26,7 @@
 #include "test_idstrategy_class.h"
 #include "../src/graphs/LoadingGraph.h"
 #include "../src/sorting/IdStrategy.h"
-#include "../src/graphs/utils/secondary_memory/header.h"
+#include <serializers/commons/secondary_memory/header.h>
 #include "../src/utils/old_code/mmapFile.h"
 #include "../src/sorting/SortingStrategyFactory.h"
 #include "test_sorting_strategies.h"

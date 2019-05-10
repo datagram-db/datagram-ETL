@@ -27,7 +27,7 @@
 #define ETL_OFFSETMAP_H
 
 #include "../etl.h"
-#include "../graphs/utils/secondary_memory/vertex_id_index.h"
+#include <serializers/commons/secondary_memory/primary_index.h>
 #include "../../third_party/varsorter/external_merge_sort/ExternalULongPairComparator.h"
 #include "../../third_party/varsorter/src/KeyValueStore.h"
 #include <map>
@@ -45,7 +45,7 @@ class OffsetMap {
     std::map<LONG_NUMERIC, std::pair<LONG_NUMERIC,LONG_NUMERIC>> primary_memory_map;
 
     std::string vertex_id_file;
-    FILE* vertex_id_index;
+    FILE* vertex_id_index_file;
     bool isFinished;
     bool is_strategy_primary_memory;
 

@@ -23,17 +23,17 @@
 // Created by giacomo on 06/05/19.
 //
 
-#include "AdjacencyList.h"
+#include "TransformationGraphAdjacencyList.h"
 
-AdjacencyList::AdjacencyList(bool isStrategyPrimaryMemory) : is_strategy_primary_memory(isStrategyPrimaryMemory) {}
+TransformationGraphAdjacencyList::TransformationGraphAdjacencyList(bool isStrategyPrimaryMemory) : is_strategy_primary_memory(isStrategyPrimaryMemory) {}
 
-AdjacencyList::~AdjacencyList() {
+TransformationGraphAdjacencyList::~TransformationGraphAdjacencyList() {
     if (!is_strategy_primary_memory) {
         // TODO
     }
 }
 
-void AdjacencyList::insert(LONG_NUMERIC &src, LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst, LONG_NUMERIC &edge_id) {
+void TransformationGraphAdjacencyList::insert(LONG_NUMERIC &src, LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst, LONG_NUMERIC &edge_id) {
     if (is_strategy_primary_memory) {
         primary_memory_strategy[src][edge_hash].emplace_back(dst, edge_id);
     } else {
@@ -41,7 +41,7 @@ void AdjacencyList::insert(LONG_NUMERIC &src, LONG_NUMERIC &edge_hash, LONG_NUME
     }
 }
 
-void AdjacencyList::initIteration(LONG_NUMERIC &vertex_id) {
+void TransformationGraphAdjacencyList::initIteration(LONG_NUMERIC &vertex_id) {
     if (is_strategy_primary_memory) {
         thereIsNoElement = false;
         auto it = primary_memory_strategy.find(vertex_id);
@@ -68,7 +68,7 @@ void AdjacencyList::initIteration(LONG_NUMERIC &vertex_id) {
     }
 }
 
-bool AdjacencyList::hasNext() {
+bool TransformationGraphAdjacencyList::hasNext() {
     if (is_strategy_primary_memory) {
         if (thereIsNoElement) return false;
         while (pm_beg.it != pm_end.it) {
@@ -95,7 +95,7 @@ bool AdjacencyList::hasNext() {
     }
 }
 
-void AdjacencyList::get(LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst, LONG_NUMERIC &edge_id) {
+void TransformationGraphAdjacencyList::get(LONG_NUMERIC &edge_hash, LONG_NUMERIC &dst, LONG_NUMERIC &edge_id) {
     if (is_strategy_primary_memory) {
         edge_hash = pm_beg.it->first;
         dst = pm_beg.begin->first;

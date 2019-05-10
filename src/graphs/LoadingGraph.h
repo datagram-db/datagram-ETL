@@ -29,7 +29,7 @@
 #include <string>
 #include "../etl.h"
 #include "../maps/OffsetMap.h"
-#include "utils/primary_memory/ERVertex.h"
+#include <serializers/commons/primary_memory/entity_relationship.h>
 #include "../utils/old_code/Serialize.h"
 
 /**

@@ -26,8 +26,8 @@
 #include "OffsetMap.h"
 
 #define ACTUAL_SERIALIZE(id, offset, vertx_hash) do {\
-    struct vertex_id_index pix{id, vertx_hash, offset};\
-    fwrite(&pix, sizeof(struct vertex_id_index), 1, vertex_id_index);\
+    vertex_id_index pix{id, vertx_hash, offset};\
+    fwrite(&pix, sizeof(vertex_id_index), 1, vertex_id_index_file);\
 } while(0)
 
 
@@ -37,7 +37,7 @@ OffsetMap::OffsetMap(bool isStrategyPrimaryMemory, std::string vertexIdFile)
     // I need to open the file only once
     if (isStrategyPrimaryMemory) {
         secondary_memory.doclose();
-        vertex_id_index = fopen64(vertex_id_file.c_str(), "w");
+        vertex_id_index_file = fopen64(vertex_id_file.c_str(), "w");
     }
 
 }
@@ -47,9 +47,9 @@ OffsetMap::~OffsetMap() {
 }
 
 void OffsetMap::close() {
-    if (vertex_id_index) {
-        fclose(vertex_id_index);
-        vertex_id_index = nullptr;
+    if (vertex_id_index_file) {
+        fclose(vertex_id_index_file);
+        vertex_id_index_file = nullptr;
     }
 }
 
@@ -57,14 +57,14 @@ void OffsetMap::put(LONG_NUMERIC &id, LONG_NUMERIC &offset, LONG_NUMERIC &vertex
     if (is_strategy_primary_memory) {
         primary_memory_map.emplace(id, std::make_pair(vertex_hash, offset));
     } else {
-        struct vertex_id_index pix{id, vertex_hash, offset};
-        secondary_memory.insert((void*)&pix, sizeof(struct vertex_id_index));
+        vertex_id_index pix{id, vertex_hash, offset};
+        secondary_memory.insert((void*)&pix, sizeof(vertex_id_index));
         ACTUAL_SERIALIZE(id, offset, vertex_hash);
     }
 }
 
 void OffsetMap::serialize() {
-    if (vertex_id_index) {
+    if (vertex_id_index_file) {
         if (is_strategy_primary_memory) {
             // I need to explicitely serialize only if I did not sorted the data in primary memory using the primary memory strategy.
             for (std::map<LONG_NUMERIC, std::pair<LONG_NUMERIC, LONG_NUMERIC>>::iterator beg = primary_memory_map.begin(), en = primary_memory_map.end();
