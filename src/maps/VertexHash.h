@@ -27,7 +27,7 @@
 //#include <stxxl.h>
 #include "../etl.h"
 #include "../../third_party/varsorter/src/KeyValueStore.h"
-#include "../../third_party/varsorter/external_merge_sort/ExternalULongKeyComparator.h"
+#include "../../third_party/varsorter/external_merge_sort/ExternalULongPairComparator.h"
 
 /*struct VertexHashComparator
 {
@@ -41,7 +41,7 @@
 class VertexHash {
     bool is_primary_memory;
     std::unordered_map<LONG_NUMERIC, LONG_NUMERIC> primary_memory_map;
-    KeyValueStore<ExternalULongKeyComparator> secondary_memory_map{sizeof(LONG_NUMERIC)*2};
+    KeyValueStore<ExternalULongPairComparator> secondary_memory_map{sizeof(LONG_NUMERIC)*2};
     //stxxl::map<LONG_NUMERIC, LONG_NUMERIC, VertexHashComparator, 4096, 4096> secondary_memory_map;
 
 public:

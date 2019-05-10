@@ -38,7 +38,11 @@ void VertexHash::put(LONG_NUMERIC &vertexId, LONG_NUMERIC &hash) {
     if (is_primary_memory) {
         primary_memory_map.emplace(vertexId, hash);
     } else {
-        secondary_memory_map[vertexId] = hash;
+        // Inserting the data as an array of two elements
+        LONG_NUMERIC memo[2];
+        memo[0] = vertexId;
+        memo[1] = hash;
+        secondary_memory_map.insert((void*)memo, sizeof(LONG_NUMERIC)*2);
     }
 }
 
@@ -46,6 +50,8 @@ LONG_NUMERIC VertexHash::operator[](LONG_NUMERIC &vertexId) {
     if (is_primary_memory) {
         return primary_memory_map[vertexId];
     } else {
-        return (uint_fast64_t)secondary_memory_map[vertexId];
+        // 1) Returning the actual object having
+        // 2) Accessing to the second, that is the value, field
+        return ((LONG_NUMERIC*)((struct iovec*)secondary_memory_map[vertexId]))[1];
     }
 }

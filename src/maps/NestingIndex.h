@@ -30,6 +30,8 @@
 #include <vector>
 #include <cassert>
 #include "../etl.h"
+#include "../../third_party/varsorter/external_merge_sort/ExternalULongPairComparator.h"
+#include "../../third_party/varsorter/src/KeyValueStore.h"
 
 /**
  * This class implements the hashing of a set of vertices.
@@ -38,6 +40,11 @@ class NestingIndex {
     std::map<LONG_NUMERIC, std::vector<LONG_NUMERIC >> primary_memory;
     std::map<LONG_NUMERIC, std::vector<LONG_NUMERIC >>::iterator beg, end;
     std::vector<LONG_NUMERIC>::iterator internalBeg, internalEnd;
+
+    KeyValueStore<ExternalULongPairComparator> secondary_memory{sizeof(LONG_NUMERIC)*2};
+    KeyValueStore<ExternalULongPairComparator>::iterator sm_internalBeg, sm_internalEnd;
+    struct iovec* ptr;
+    LONG_NUMERIC currentKey;
 
     bool isPrimaryMemory;
 

@@ -37,7 +37,7 @@ void NestingIndex::put(LONG_NUMERIC &key, LONG_NUMERIC &value) {
 
 void NestingIndex::sort() {
     if (!isPrimaryMemory) {
-        // sorting memory
+        //
     }
 }
 
@@ -46,7 +46,13 @@ void NestingIndex::initIterator() {
         beg = primary_memory.begin();
         end = primary_memory.end();
     } else {
-        // TODO: implement
+        // explicitely sorting at this stage
+        sm_internalBeg = secondary_memory.begin();
+        sm_internalEnd = secondary_memory.end();
+        if (sm_internalBeg != sm_internalEnd) {
+            ptr = *sm_internalBeg;
+            currentKey = ((LONG_NUMERIC*)ptr)[0];
+        }
     }
 }
 
@@ -54,8 +60,7 @@ bool NestingIndex::hasNextKey() {
     if (isPrimaryMemory) {
         return (beg != end);
     } else {
-        assert(false);
-        return false;
+        return (sm_internalBeg != sm_internalEnd);
     }
 }
 
@@ -67,7 +72,7 @@ LONG_NUMERIC NestingIndex::getCurrentKey() {
             return beg->first;
         }
     } else {
-        assert(false);
+        return (currentKey = ((LONG_NUMERIC*)ptr)[0]);
     }
     return 0;
 }
@@ -78,7 +83,8 @@ bool NestingIndex::hasCurrentKeyContent() {
         if (!toret) beg++;
         return toret;
     } else {
-        assert(false);
+        // Checking whether the next pointed data will contain the same key or not
+        return ((sm_internalBeg != sm_internalEnd) && (currentKey == ((LONG_NUMERIC*)ptr)[0]));
     }
 }
 
@@ -86,6 +92,11 @@ LONG_NUMERIC NestingIndex::getCurrentKeyContent() {
     if (isPrimaryMemory) {
         return *internalBeg++;
     } else {
-        assert(false);
+        LONG_NUMERIC toret = ((LONG_NUMERIC*)ptr)[0];
+        sm_internalBeg++;
+        if (sm_internalBeg != sm_internalEnd) {
+            ptr = *sm_internalBeg;
+        }
+        return toret;
     }
 }

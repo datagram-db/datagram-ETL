@@ -32,10 +32,14 @@
 
 
 OffsetMap::OffsetMap(bool isStrategyPrimaryMemory, std::string vertexIdFile)
-        : is_strategy_primary_memory(isStrategyPrimaryMemory), isFinished{false}, vertex_id_file(vertexIdFile) {
+        : is_strategy_primary_memory(isStrategyPrimaryMemory), isFinished{false}, vertex_id_file(vertexIdFile),
+        secondary_memory{{sizeof(vertex_id_index)}, isStrategyPrimaryMemory ? vertexIdFile : std::tmpnam(NULL)} {
     // I need to open the file only once
-    if (isStrategyPrimaryMemory)
-    vertex_id_index = fopen64(vertex_id_file.c_str(), "w");
+    if (isStrategyPrimaryMemory) {
+        secondary_memory.doclose();
+        vertex_id_index = fopen64(vertex_id_file.c_str(), "w");
+    }
+
 }
 
 OffsetMap::~OffsetMap() {
@@ -53,7 +57,9 @@ void OffsetMap::put(LONG_NUMERIC &id, LONG_NUMERIC &offset, LONG_NUMERIC &vertex
     if (is_strategy_primary_memory) {
         primary_memory_map.emplace(id, std::make_pair(vertex_hash, offset));
     } else {
-        //ACTUAL_SERIALIZE(id, offset, vertex_hash);
+        struct vertex_id_index pix{id, vertex_hash, offset};
+        secondary_memory.insert((void*)&pix, sizeof(struct vertex_id_index));
+        ACTUAL_SERIALIZE(id, offset, vertex_hash);
     }
 }
 
@@ -66,7 +72,8 @@ void OffsetMap::serialize() {
                 ACTUAL_SERIALIZE(beg->first, beg->second.second, beg->second.first);
             }
         } else {
-            // TODO: sort the map in secondary memory
+            // In this case, I just sort the already-serialized data.
+            secondary_memory.sortPair();
         }
     }
 }

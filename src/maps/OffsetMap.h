@@ -28,6 +28,8 @@
 
 #include "../etl.h"
 #include "../graphs/utils/secondary_memory/vertex_id_index.h"
+#include "../../third_party/varsorter/external_merge_sort/ExternalULongPairComparator.h"
+#include "../../third_party/varsorter/src/KeyValueStore.h"
 #include <map>
 #include <utility>
 #include <cstdio>
@@ -46,6 +48,8 @@ class OffsetMap {
     FILE* vertex_id_index;
     bool isFinished;
     bool is_strategy_primary_memory;
+
+    KeyValueStore<ExternalULongPairComparator> secondary_memory;
 
 public:
     OffsetMap(bool isStrategyPrimaryMemory, std::string vertexIdFile);
