@@ -22,7 +22,6 @@
 //
 // Created by giacomo on 07/05/19.
 //
-
 #include "NestingIndex.h"
 
 NestingIndex::NestingIndex(bool isPrimaryMemory) : isPrimaryMemory(isPrimaryMemory) {}
