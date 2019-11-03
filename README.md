@@ -1,4 +1,4 @@
-# GatorLAND: ETL
+# DATAGRAM ETL
 
 This project implements the ETL for loading the graph operand to traverse using the approximate graph matching.
 For this reason, there are some third party dependencies in the `third_party` folder. Some require additional setup, that is explained in the following subsection
